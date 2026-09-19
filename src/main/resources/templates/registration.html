@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Warranty Registration</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .registration-card {
+            width: 500px;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .icon {
+            text-align: center;
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #203a43;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            outline: none;
+            font-size: 15px;
+        }
+
+        input:focus {
+            border-color: #2c5364;
+            box-shadow: 0 0 5px rgba(44, 83, 100, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #203a43;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background: #2c5364;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #999;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="registration-card">
+
+        <div class="icon">📋</div>
+
+        <h2>Product Warranty Registration</h2>
+
+        <p class="subtitle">
+            Register your product warranty quickly and securely
+        </p>
+
+        <form action="/register" method="post">
+
+            <div class="form-group">
+                <label>Product Name</label>
+                <input type="text"
+                       name="productName"
+                       placeholder="Enter product name"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Product ID</label>
+                <input type="text"
+                       name="productId"
+                       placeholder="Enter product ID"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Customer Name</label>
+                <input type="text"
+                       name="customerName"
+                       placeholder="Enter customer name"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Purchase Date</label>
+                <input type="date"
+                       name="purchaseDate"
+                       required>
+            </div>
+
+            <button type="submit">
+                Register Warranty
+            </button>
+
+        </form>
+
+        <p class="footer">
+            Product Warranty Registration Portal
+        </p>
+
+    </div>
+
+</body>
+</html>

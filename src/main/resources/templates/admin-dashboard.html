@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Warranty Portal - Admin Dashboard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f4f7fb;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f2027, #2c5364);
+            color: white;
+            padding: 22px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h2 {
+            font-size: 24px;
+        }
+
+        .admin {
+            font-size: 14px;
+            background: rgba(255,255,255,0.15);
+            padding: 10px 16px;
+            border-radius: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 45px auto;
+            padding: 0 25px;
+        }
+
+        .welcome {
+            margin-bottom: 35px;
+        }
+
+        .welcome h1 {
+            color: #203a43;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #777;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        .icon {
+            font-size: 45px;
+            margin-bottom: 18px;
+        }
+
+        .card h3 {
+            color: #203a43;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 22px;
+            background: #203a43;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background: #2c5364;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #999;
+            font-size: 13px;
+        }
+
+        @media (max-width: 800px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h2>🛡️ Warranty Portal</h2>
+        <div class="admin">👤 Admin</div>
+    </div>
+
+    <div class="container">
+
+        <div class="welcome">
+            <h1>Admin Dashboard</h1>
+            <p>Welcome back, Admin! Manage product warranties from here.</p>
+        </div>
+
+        <div class="cards">
+
+            <!-- View Warranties -->
+            <div class="card">
+                <div class="icon">📋</div>
+                <h3>View Warranties</h3>
+                <p>View all registered product warranties.</p>
+                <a href="/warranties" class="btn">View All</a>
+            </div>
+
+            <!-- Update Warranty -->
+            <div class="card">
+                <div class="icon">✏️</div>
+                <h3>Update Warranty</h3>
+                <p>Update existing warranty information.</p>
+                <a href="/update-selection" class="btn">Update</a>
+            </div>
+
+            <!-- Delete Warranty -->
+            <div class="card">
+                <div class="icon">🗑️</div>
+                <h3>Delete Warranty</h3>
+                <p>Remove a warranty record from the system.</p>
+                <a href="/delete-selection" class="btn">Delete</a>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            Product Warranty Registration Portal
+        </div>
+
+    </div>
+
+</body>
+</html>

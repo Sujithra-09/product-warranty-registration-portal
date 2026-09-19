@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Warranty Portal - Delete Warranty</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f4f7fb;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            padding: 22px 50px;
+        }
+
+        .header h2 {
+            font-size: 24px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 45px auto;
+            padding: 0 25px;
+        }
+
+        .title {
+            margin-bottom: 30px;
+        }
+
+        .title h1 {
+            color: #203a43;
+            margin-bottom: 8px;
+        }
+
+        .title p {
+            color: #777;
+        }
+
+        .records {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 28px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            color: #203a43;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .delete-btn {
+            margin-top: 18px;
+            padding: 11px 22px;
+            background: #b42318;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background: #8f1d14;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 11px 22px;
+            background: #777;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 700px) {
+            .records {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h2>🛡️ Warranty Portal</h2>
+</div>
+
+<div class="container">
+
+    <div class="title">
+        <h1>🗑️ Delete Warranty</h1>
+        <p>Select a warranty record to remove.</p>
+    </div>
+
+    <div class="records">
+
+        <div class="card" th:each="warranty : ${warranties}">
+
+            <h3 th:text="${warranty.productName}"></h3>
+
+            <p>
+                <strong>Product ID:</strong>
+                <span th:text="${warranty.productId}"></span>
+            </p>
+
+            <p>
+                <strong>Customer:</strong>
+                <span th:text="${warranty.customerName}"></span>
+            </p>
+
+            <form action="/delete-warranty" method="post">
+                <input type="hidden"
+                       name="id"
+                       th:value="${warranty.id}">
+
+                <button type="submit" class="delete-btn">
+                    🗑️ Delete
+                </button>
+            </form>
+
+        </div>
+
+    </div>
+
+    <a href="/admin-dashboard" class="back-btn">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

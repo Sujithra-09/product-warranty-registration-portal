@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Warranty</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .card {
+            width: 500px;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            text-align: center;
+            color: #203a43;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #203a43;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background: #2c5364;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #203a43;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2>Update Warranty</h2>
+
+    <p class="subtitle">
+        Update existing product warranty information
+    </p>
+
+    <form action="/update-warranty" method="post">
+
+        <input type="hidden"
+               name="id"
+               th:value="${warranty.id}">
+
+        <div class="form-group">
+            <label>Product Name</label>
+            <input type="text"
+                   name="productName"
+                   th:value="${warranty.productName}"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label>Product ID</label>
+            <input type="text"
+                   name="productId"
+                   th:value="${warranty.productId}"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label>Customer Name</label>
+            <input type="text"
+                   name="customerName"
+                   th:value="${warranty.customerName}"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label>Purchase Date</label>
+            <input type="date"
+                   name="purchaseDate"
+                   th:value="${warranty.purchaseDate}"
+                   required>
+        </div>
+
+        <button type="submit">
+            Update Warranty
+        </button>
+
+    </form>
+
+    <a href="/warranties" class="back">
+        ← Back to Warranty List
+    </a>
+
+</div>
+
+</body>
+</html>
