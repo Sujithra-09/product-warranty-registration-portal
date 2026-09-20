@@ -31,4 +31,19 @@ public class WarrantyRegistrationRequest {
     public String getPurchaseDate() {
         return purchaseDate;
     }
+    public void setProductName(String productName) {
+    this.productName = productName;
+}
+
+public void setProductId(String productId) {
+    this.productId = productId;
+}
+
+public void setCustomerName(String customerName) {
+    this.customerName = customerName;
+}
+
+public void setPurchaseDate(String purchaseDate) {
+    this.purchaseDate = purchaseDate;
+}
 }

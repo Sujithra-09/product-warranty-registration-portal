@@ -28,89 +28,97 @@ class WarrantyServiceTest {
     void setUp() {
         warranty = new WarrantyRegistration(
                 "Laptop",
-                "LAP001",
+                "P001",
                 "Sujithra",
-                "2026-01-01"
+                "2026-09-20"
         );
     }
 
     @Test
-    void createWarranty_shouldSaveWarranty() {
+    void testCreateWarranty() {
         when(repository.save(warranty)).thenReturn(warranty);
 
-        WarrantyRegistration result = warrantyService.createWarranty(warranty);
+        WarrantyRegistration result =
+                warrantyService.createWarranty(warranty);
 
         assertEquals(warranty, result);
         verify(repository).save(warranty);
     }
 
     @Test
-    void getAllWarranties_shouldReturnAllWarranties() {
+    void testGetAllWarranties() {
         when(repository.findAll()).thenReturn(List.of(warranty));
 
-        List<WarrantyRegistration> result = warrantyService.getAllWarranties();
+        List<WarrantyRegistration> result =
+                warrantyService.getAllWarranties();
 
         assertEquals(1, result.size());
         assertEquals(warranty, result.get(0));
+        verify(repository).findAll();
     }
 
     @Test
-    void getWarrantyById_shouldReturnWarranty() {
+    void testGetWarrantyById() {
         when(repository.findById(1L)).thenReturn(Optional.of(warranty));
 
-        WarrantyRegistration result = warrantyService.getWarrantyById(1L);
+        WarrantyRegistration result =
+                warrantyService.getWarrantyById(1L);
 
         assertEquals(warranty, result);
+        verify(repository).findById(1L);
     }
 
     @Test
-    void getWarrantyById_shouldReturnNullWhenNotFound() {
+    void testGetWarrantyByIdNotFound() {
         when(repository.findById(1L)).thenReturn(Optional.empty());
 
-        WarrantyRegistration result = warrantyService.getWarrantyById(1L);
+        WarrantyRegistration result =
+                warrantyService.getWarrantyById(1L);
 
         assertNull(result);
     }
 
     @Test
-    void updateWarranty_shouldUpdateExistingWarranty() {
+    void testUpdateWarranty() {
         when(repository.findById(1L)).thenReturn(Optional.of(warranty));
         when(repository.save(warranty)).thenReturn(warranty);
 
-        WarrantyRegistration result = warrantyService.updateWarranty(
-                1L,
-                "Phone",
-                "PH001",
-                "Sujithra",
-                "2026-02-01"
-        );
+        WarrantyRegistration result =
+                warrantyService.updateWarranty(
+                        1L,
+                        "Mobile",
+                        "P002",
+                        "Sujithra Updated",
+                        "2026-10-01"
+                );
 
-        assertNotNull(result);
-        assertEquals("Phone", warranty.getProductName());
-        assertEquals("PH001", warranty.getProductId());
-        assertEquals("2026-02-01", warranty.getPurchaseDate());
+        assertEquals("Mobile", result.getProductName());
+        assertEquals("P002", result.getProductId());
+        assertEquals("Sujithra Updated", result.getCustomerName());
+        assertEquals("2026-10-01", result.getPurchaseDate());
 
         verify(repository).save(warranty);
     }
 
     @Test
-    void updateWarranty_shouldReturnNullWhenNotFound() {
+    void testUpdateWarrantyNotFound() {
         when(repository.findById(1L)).thenReturn(Optional.empty());
 
-        WarrantyRegistration result = warrantyService.updateWarranty(
-                1L,
-                "Phone",
-                "PH001",
-                "Sujithra",
-                "2026-02-01"
-        );
+        WarrantyRegistration result =
+                warrantyService.updateWarranty(
+                        1L,
+                        "Mobile",
+                        "P002",
+                        "Sujithra",
+                        "2026-10-01"
+                );
 
         assertNull(result);
         verify(repository, never()).save(any());
     }
 
     @Test
-    void deleteWarranty_shouldDeleteById() {
+    void testDeleteWarranty() {
         warrantyService.deleteWarranty(1L);
 
         verify(repository).deleteById(1L);

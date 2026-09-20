@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 
 @Controller
 public class LoginController {
@@ -21,13 +22,11 @@ public class LoginController {
     private final BCryptPasswordEncoder passwordEncoder =
             new BCryptPasswordEncoder();
 
-    // Temporary hashes will be generated using /generate-hash
-    private String adminPasswordHash =
-        "$2a$10$6pHsRTPcEgu0.tWurKiazu7w9SiPmykjOPfntPvpnDokZoo8GoPn6";
+    @Value("${ADMIN_PASSWORD_HASH}")
+private String adminPasswordHash;
 
-private String userPasswordHash =
-        "$2a$10$6pHsRTPcEgu0.tWurKiazu7w9SiPmykjOPfntPvpnDokZoo8GoPn6";
-
+@Value("${USER_PASSWORD_HASH}")
+private String userPasswordHash;
     @GetMapping("/login")
     public String loginPage() {
         return "login";
@@ -69,21 +68,26 @@ private String userPasswordHash =
     }
 
     @PostMapping("/register")
-    public String register(
-            @Valid @ModelAttribute WarrantyRegistrationRequest request) {
+public String register(
+        @Valid @ModelAttribute WarrantyRegistrationRequest request,
+        org.springframework.validation.BindingResult result) {
 
-        WarrantyRegistration warranty =
-                new WarrantyRegistration(
-                        request.getProductName(),
-                        request.getProductId(),
-                        request.getCustomerName(),
-                        request.getPurchaseDate()
-                );
-
-        warrantyService.createWarranty(warranty);
-
-        return "registration-success";
+    if (result.hasErrors()) {
+        return "registration";
     }
+
+    WarrantyRegistration warranty =
+            new WarrantyRegistration(
+                    request.getProductName(),
+                    request.getProductId(),
+                    request.getCustomerName(),
+                    request.getPurchaseDate()
+            );
+
+    warrantyService.createWarranty(warranty);
+
+    return "registration-success";
+}
 
     @GetMapping("/warranties")
     public String viewWarranties(
@@ -198,11 +202,4 @@ private String userPasswordHash =
         return "OK";
     }
 
-    @GetMapping("/generate-hash")
-    @ResponseBody
-    public String generateHash(
-            @RequestParam(defaultValue = "1234") String password) {
-
-        return passwordEncoder.encode(password);
-    }
 }
