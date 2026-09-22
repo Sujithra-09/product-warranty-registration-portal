@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN chmod +x gradlew && ./gradlew build -x test
+RUN chmod +x gradlew && ./gradlew bootJar -x test && rm -f build/libs/*-plain.jar
 
 CMD ["sh", "-c", "java -jar build/libs/*.jar"]
