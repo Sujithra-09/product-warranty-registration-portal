@@ -1,17 +1,20 @@
 package com.warranty.portal;
 
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Value;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Controller
 public class LoginController {
@@ -23,40 +26,45 @@ public class LoginController {
             new BCryptPasswordEncoder();
 
     @Value("${ADMIN_PASSWORD_HASH}")
-private String adminPasswordHash;
+    private String adminPasswordHash;
 
-@Value("${USER_PASSWORD_HASH}")
-private String userPasswordHash;
+    @Value("${USER_PASSWORD_HASH}")
+    private String userPasswordHash;
+
+    // Login page
     @GetMapping("/login")
     public String loginPage() {
         return "login";
     }
 
+    // Login
     @PostMapping("/login")
     public String login(
             @RequestParam String loginId,
             @RequestParam String password,
             HttpSession session) {
 
-        if (loginId.equals("admin")
-                && !adminPasswordHash.isEmpty()
+        // Admin login
+        if ("admin".equals(loginId)
                 && passwordEncoder.matches(password, adminPasswordHash)) {
 
             session.setAttribute("role", "ADMIN");
             return "admin-dashboard";
         }
 
-        if (loginId.equals("user")
-                && !userPasswordHash.isEmpty()
+        // User login
+        if ("user".equals(loginId)
                 && passwordEncoder.matches(password, userPasswordHash)) {
 
             session.setAttribute("role", "USER");
             return "registration";
         }
 
+        // Invalid login
         return "login";
     }
 
+    // Admin dashboard
     @GetMapping("/admin-dashboard")
     public String adminDashboard(HttpSession session) {
 
@@ -67,28 +75,30 @@ private String userPasswordHash;
         return "admin-dashboard";
     }
 
+    // User registration
     @PostMapping("/register")
-public String register(
-        @Valid @ModelAttribute WarrantyRegistrationRequest request,
-        org.springframework.validation.BindingResult result) {
+    public String register(
+            @Valid @ModelAttribute WarrantyRegistrationRequest request,
+            BindingResult result) {
 
-    if (result.hasErrors()) {
-        return "registration";
+        if (result.hasErrors()) {
+            return "registration";
+        }
+
+        WarrantyRegistration warranty =
+                new WarrantyRegistration(
+                        request.getProductName(),
+                        request.getProductId(),
+                        request.getCustomerName(),
+                        request.getPurchaseDate()
+                );
+
+        warrantyService.createWarranty(warranty);
+
+        return "registration-success";
     }
 
-    WarrantyRegistration warranty =
-            new WarrantyRegistration(
-                    request.getProductName(),
-                    request.getProductId(),
-                    request.getCustomerName(),
-                    request.getPurchaseDate()
-            );
-
-    warrantyService.createWarranty(warranty);
-
-    return "registration-success";
-}
-
+    // View warranties
     @GetMapping("/warranties")
     public String viewWarranties(
             Model model,
@@ -106,6 +116,7 @@ public String register(
         return "warranty-list";
     }
 
+    // Update selection
     @GetMapping("/update-selection")
     public String updateSelection(
             Model model,
@@ -123,6 +134,7 @@ public String register(
         return "update-selection";
     }
 
+    // Delete selection
     @GetMapping("/delete-selection")
     public String deleteSelection(
             Model model,
@@ -140,6 +152,7 @@ public String register(
         return "delete-selection";
     }
 
+    // Update warranty page
     @GetMapping("/update-warranty")
     public String updateWarrantyPage(
             @RequestParam Long id,
@@ -158,6 +171,7 @@ public String register(
         return "update-warranty";
     }
 
+    // Update warranty
     @PostMapping("/update-warranty")
     public String updateWarranty(
             @RequestParam Long id,
@@ -182,6 +196,7 @@ public String register(
         return "redirect:/warranties";
     }
 
+    // Delete warranty
     @PostMapping("/delete-warranty")
     public String deleteWarranty(
             @RequestParam Long id,
@@ -196,10 +211,10 @@ public String register(
         return "redirect:/warranties";
     }
 
+    // Health check
     @GetMapping("/health")
     @ResponseBody
     public String health() {
         return "OK";
     }
-
 }
