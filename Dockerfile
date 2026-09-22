@@ -6,4 +6,4 @@ COPY . .
 
 RUN chmod +x gradlew && ./gradlew build -x test
 
-CMD ["java", "-jar", "build/libs/warranty-portal.jar"]
+CMD ["sh", "-c", "java -jar build/libs/*.jar"]
